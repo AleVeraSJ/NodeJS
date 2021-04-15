@@ -44,19 +44,23 @@ const server = http.createServer((req, res)=>{
              payload: buffer,
          };
 
+         console.log ({data});
+
          //3.6 elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
          let handler;
-         if (rutaLimpia && enrutador[rutaLimpia]){
+         if (rutaLimpia && enrutador[rutaLimpia]){ // coercion de tipos
              handler = enrutador[rutaLimpia];
          } else {
-             handler = enrutador.noEncontrado; //el problema esta aca
+             handler = enrutador.noEncontrado; 
          };
 
            //4. ejecutar handler para enviar la respuesta
            if (typeof handler === 'function' ){
             handler(data, (statusCode = 200, mensaje)=>{
                let respuesta = JSON.stringify(mensaje);
+               res.setHeader("Content-Type", "application/json");
                res.writeHead(statusCode);
+
                //linea donde realmente ya estamos respondiendo a la aplicacion cliente 
                res.end(respuesta);
             })
