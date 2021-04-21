@@ -2,6 +2,16 @@ const http = require("http");
 const url = require ("url");
 const StringDecoder = require('string_decoder').StringDecoder;
 
+
+let recursos = {
+    mascotas: [
+        {tipo:"perro", nombre: "Rocco", dueño:"Ale" },
+        {tipo:"perro", nombre: "Rocco", dueño:"Ale" },
+        {tipo:"perro", nombre: "Rocco", dueño:"Ale" },
+        {tipo:"perro", nombre: "Rocco", dueño:"Ale" }
+    ],
+};
+
     //1.obtener la url desde el objeto request// ok
 const server = http.createServer((req, res)=>{
     const urlActual = req.url;
@@ -26,6 +36,8 @@ const server = http.createServer((req, res)=>{
     const decoder = new StringDecoder("utf-8");
     let buffer ="";
 
+
+
     //3.4.1 ir acumulando la data cuando el request reciba un payload
     req.on("data", (data)=>{
         buffer += decoder.write(data);
@@ -34,6 +46,11 @@ const server = http.createServer((req, res)=>{
     //3.4.2 terminar de acumular datos y decirle al decoder que finalice
     req.on("end", ()=>{
         buffer += decoder.end();
+
+        if (headers['content-type'] === 'application/json'){
+            buffer = JSON.parse(buffer);
+        }
+
 
          //3.5 ordenar la data del request
          let data = {
@@ -48,8 +65,8 @@ const server = http.createServer((req, res)=>{
 
          //3.6 elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
          let handler;
-         if (rutaLimpia && enrutador[rutaLimpia]){ // coercion de tipos
-             handler = enrutador[rutaLimpia];
+         if (rutaLimpia && enrutador [rutaLimpia] && enrutador [rutaLimpia][metodo.toLowerCase()] ){ // coercion de tipos
+             handler = enrutador[rutaLimpia][metodo];
          } else {
              handler = enrutador.noEncontrado; 
          };
@@ -72,9 +89,20 @@ const enrutador = {
     ruta: (data, callback) =>{
         callback(200, {mensaje: "esta es /ruta"});
     },
-    usuarios: (data, callback) =>{
-        callback(200, [{nombre: "usuario 2"}, {nombre: "usuario 1"}]);
+    //usuarios: (data, callback) =>{
+       // callback(200, [{nombre: "usuario 2"}, {nombre: "usuario 1"}]);
+   // },
+
+    mascotas:{
+        get: (data, callback) =>{
+            callback(200,recursos.mascotas);
+        },
+        post: (data, callback) =>{
+            recursos.mascotas.push(data.payload);
+            callback(201, data.payload);
+        },
     },
+
     noEncontrado: (data, callback) =>{
         callback(404, {mensaje: "no encontrado"});
     }
