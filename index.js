@@ -66,7 +66,7 @@ const server = http.createServer((req, res)=>{
          //3.6 elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
          let handler;
          if (rutaLimpia && enrutador [rutaLimpia] && enrutador [rutaLimpia][metodo.toLowerCase()] ){ // coercion de tipos
-             handler = enrutador[rutaLimpia][metodo];
+             handler = enrutador[rutaLimpia][metodo.toLowerCase()];
          } else {
              handler = enrutador.noEncontrado; 
          };
