@@ -45,11 +45,11 @@ const server = http.createServer((req, res)=>{
 
     //3.4.2 terminar de acumular datos y decirle al decoder que finalice
     req.on("end", ()=>{
-        buffer += decoder.end();
+         buffer += decoder.end();
 
-        if (headers['content-type'] === 'application/json'){
+         if (headers['content-type'] === 'application/json'){
             buffer = JSON.parse(buffer);
-        }
+         }
 
 
          //3.5 ordenar la data del request
@@ -80,18 +80,17 @@ const server = http.createServer((req, res)=>{
 
                //linea donde realmente ya estamos respondiendo a la aplicacion cliente 
                res.end(respuesta);
-            })
-        }
-       
+               });
+            }
     });
 });
 const enrutador = {
     ruta: (data, callback) =>{
         callback(200, {mensaje: "esta es /ruta"});
     },
-    //usuarios: (data, callback) =>{
-       // callback(200, [{nombre: "usuario 2"}, {nombre: "usuario 1"}]);
-   // },
+    /*usuarios: (data, callback) =>{
+        callback(200, [{nombre: "usuario 2"}, {nombre: "usuario 1"}]);
+    },*/
 
     mascotas:{
         get: (data, callback) =>{
