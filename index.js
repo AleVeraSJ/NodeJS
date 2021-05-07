@@ -50,10 +50,15 @@ const server = http.createServer((req, res)=>{
          if (headers['content-type'] === 'application/json'){
             buffer = JSON.parse(buffer);
          }
+         //3.4.3 revisar si tiene subrutas en este caso es el indice del array
 
+         if(rutaLimpia.indexOf("/")>= -1){
+            var [rutaPrincipal, indice] = rutaLimpia.split("/");
+         }
 
          //3.5 ordenar la data del request
          let data = {
+             indice,
              ruta: rutaLimpia,
              query,
              metodo,
@@ -61,17 +66,18 @@ const server = http.createServer((req, res)=>{
              payload: buffer,
          };
 
+        
          console.log ({data});
 
          //3.6 elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
          let handler;
-         if (rutaLimpia && enrutador [rutaLimpia] && enrutador [rutaLimpia][metodo.toLowerCase()] ){ // coercion de tipos
-             handler = enrutador[rutaLimpia][metodo.toLowerCase()];
+         if (rutaPrincipal && enrutador [rutaPrincipal] && enrutador [rutaPrincipal][metodo.toLowerCase()] ){ // coercion de tipos
+             handler = enrutador[rutaPrincipal][metodo.toLowerCase()];
          } else {
              handler = enrutador.noEncontrado; 
          };
 
-           //4. ejecutar handler para enviar la respuesta
+           //4. ejecutar handler para enviar la respuesta 
            if (typeof handler === 'function' ){
             handler(data, (statusCode = 200, mensaje)=>{
                let respuesta = JSON.stringify(mensaje);
@@ -94,6 +100,12 @@ const enrutador = {
 
     mascotas:{
         get: (data, callback) =>{
+            if (data.indice){
+                if(recursos.mascotas[data.indice]){
+                    return  callback(200,recursos.mascotas[data.indice]);
+                }
+                return callback(404 ,{mensaje: `mascota con indice ${data.indice} no encontrada`});
+            }
             callback(200,recursos.mascotas);
         },
         post: (data, callback) =>{
