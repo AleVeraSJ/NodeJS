@@ -20,30 +20,17 @@ module.exports = {
             global.recursos.mascotas.push(data.payload);
             callback(201, data.payload);
         },
-    },
-
-
-    put: (data, callback) =>{
-        if (data.indice !== "undefined"){
-            if(global.recursos.mascotas[data.indice]){
-                global.recursos.mascotas[data.indice] = data.payload;
-                return  callback(200,global.recursos.mascotas[data.indice]);
+        put: (data, callback) =>{
+            if (data.indice !== "undefined"){
+                if(global.recursos.mascotas[data.indice]){
+                    global.recursos.mascotas[data.indice] = data.payload;
+                    return  callback(200,global.recursos.mascotas[data.indice]);
+                }
+                return callback(404 ,{mensaje: `mascota con indice ${data.indice} no encontrada`});
             }
-            return callback(404 ,{mensaje: `mascota con indice ${data.indice} no encontrada`});
-        }
-        callback(400, {mensaje: "indice no enviado"});
+            callback(400, {mensaje: "indice no enviado"});
+        },
     },
-
-
-    post: (data, callback) =>{
-        global.recursos.mascotas.push(data.payload);
-        callback(201, data.payload);
-    },
-
-
-
-
-
     noEncontrado: (data, callback) =>{
         callback(404, {mensaje: "no encontrado"});
     }
