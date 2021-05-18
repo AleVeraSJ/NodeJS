@@ -10,6 +10,8 @@ module.exports = {
     },
 
     mascotas: mascotas(recursos.mascotas),
+    veterinarias: veterinarias(recursos.veterinarias),
+
     noEncontrado: (data, callback) =>{
         callback(404, {mensaje: "no encontrado"});
     }
