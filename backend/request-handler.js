@@ -14,7 +14,21 @@ const enrutador = require("./enrutador")
         let rutaLimpia = ruta.replace(/^\/+|\/+$/g,"");
     
         //3.1 obtener metodo http
-        const metodo = req.method;
+        const metodo = req.method.toLowerCase();
+        //3.1.1 dar permisos de cors
+        
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Request-Methods", "OPTIONS, GET, PUT, DELETE, POST");
+        res.setHeader("Access-Control-Allow-Headers", "*");
+
+
+        //3.1.2 dar respuesta inmediata cuando el metodo sea options
+        
+        if (metodo === "options"){
+            res.writeHead(200);
+            res.end();
+            return;
+        }
     
         //3.2 obtener variables de query url
         const { query = {}} = urlParseada;
