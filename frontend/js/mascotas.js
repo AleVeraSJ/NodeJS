@@ -22,7 +22,7 @@ async function listarMascotas(){
         `<th scope="row">${index}</th>
         <td>${mascota.tipo}</td>
         <td>${mascota.nombre}</td>}
-        <td>${mascota.dueño}</td>
+        <td>${mascota.dueno}</td>
         <td>
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-primary editar"data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="far fa-edit"></i></button>

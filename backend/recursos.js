@@ -1,9 +1,9 @@
 module.exports = {
     mascotas: [
-        {tipo:"perro", nombre: "Rocco0", dueño:"Ale" },
-        {tipo:"perro", nombre: "Rocco1", dueño:"Ale" },
-        {tipo:"perro", nombre: "Rocco2", dueño:"Ale" },
-        {tipo:"perro", nombre: "Rocco3", dueño:"Ale" }
+        {tipo:"perro", nombre: "Rocco0", dueno:"Ale" },
+        {tipo:"perro", nombre: "Rocco1", dueno:"Ale" },
+        {tipo:"perro", nombre: "Rocco2", dueno:"Ale" },
+        {tipo:"perro", nombre: "Rocco3", dueno:"Ale" }
     ],
 
     veterinarias: [
