@@ -93,7 +93,7 @@ function solicitarMascotas(){
         if(respuesta.ok){
             return respuesta.json();
         }
-    }).then(mascotasDelServer =>{
+    }).then((mascotasDelServer) =>{
         console.log({mascotasDelServer});
     });
 }
