@@ -6,22 +6,19 @@ const form = document.getElementById("form");
 const btnGuardar = document.getElementById("btn-guardar");
 const indice = document.getElementById("indice");
 
-let mascotas = [
-    {
-        tipo:"Gato",
-        nombre:"Manchas",
-        dueño:"Ale"
-    },
-    {
-        tipo:"Perro",
-        nombre:"Manchitas",
-        dueño:"Julieta"
-    }
-];
+let mascotas = [];
 
-function listarMascotas(){
-    solicitarMascotas();
-    let htmlMascotas = mascotas.map((mascota, index)=>
+async function listarMascotas(){
+    
+    try {
+        const respuesta = await fetch("http://localhost:5000/mascotas");
+        const mascotasDelServer = await respuesta.json();
+        if (Array.isArray(mascotasDelServer)&& mascotasDelServer.length > 0 ){
+            mascotas = mascotasDelServer;
+        }
+
+        const htmlMascotas = mascotas
+        .map((mascota, index)=>
         `<th scope="row">${index}</th>
         <td>${mascota.tipo}</td>
         <td>${mascota.nombre}</td>}
@@ -36,8 +33,13 @@ function listarMascotas(){
     listaMascotas.innerHTML = htmlMascotas;
     Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
     Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminar(index));
-}
-
+    
+    } catch (error) {
+        throw error;
+    }
+};
+    
+    //solicitarMascotas();
 function enviarDatos(evento){
     evento.preventDefault();
     let datos= {
@@ -88,15 +90,7 @@ function eliminar(index){
 
 listarMascotas();
 
-function solicitarMascotas(){
-    fetch("http://localhost:5000/mascotas",{}).then((respuesta)=> {
-        if(respuesta.ok){
-            return respuesta.json();
-        }
-    }).then((mascotasDelServer) =>{
-        console.log({mascotasDelServer});
-    });
-}
+
 
 form.onsubmit = enviarDatos;
 btnGuardar.onclick = enviarDatos;
