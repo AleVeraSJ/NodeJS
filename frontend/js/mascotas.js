@@ -56,7 +56,7 @@ async function enviarDatos(evento){
         if(accion === "Editar"){
                 method = "PUT";
                 mascotas[indice.value]=datos;
-                urlEnvio = `${url}/indice.value`
+                urlEnvio = `${url}/${indice.value}`
         }
     const respuesta = await fetch (urlEnvio,{
         method,
