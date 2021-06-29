@@ -18,8 +18,9 @@ const enrutador = require("./enrutador")
         //3.1.1 dar permisos de cors
         
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Request-Methods", "OPTIONS, GET, PUT, DELETE, POST");
+        res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, DELETE, POST");
         res.setHeader("Access-Control-Allow-Headers", "*");
+        res.setHeader("Access-Control-Request-Methods", "OPTIONS, GET, PUT, DELETE, POST");
 
 
         //3.1.2 dar respuesta inmediata cuando el metodo sea options

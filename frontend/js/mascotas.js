@@ -51,19 +51,19 @@ async function enviarDatos(evento){
         };
         let method = "POST";
         let urlEnvio = url;
-        let accion = btnGuardar.value;
+        const accion = btnGuardar.value;
         console.log("enviar datos", accion);
         if(accion === "Editar"){
                 method = "PUT";
                 mascotas[indice.value]=datos;
                 urlEnvio = `${url}/indice.value`
         }
-    const respuesta = await fetch(urlEnvio,{
+    const respuesta = await fetch (urlEnvio,{
         method,
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(datos),
+        body: JSON.stringify (datos),
     });
         if (respuesta.ok){
             listarMascotas();
@@ -72,9 +72,9 @@ async function enviarDatos(evento){
     
     } catch (error) {
         throw error;
-    }
+    };
 
-}
+};
 
 
 function editar(index){
