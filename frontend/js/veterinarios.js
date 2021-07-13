@@ -1,4 +1,4 @@
-const { veterinarias } = require("../../Backend/recursos");
+
 
 const listaVeterinarias = document.getElementById("lista-Veterinarias");
 const tipo = document.getElementById("pais");
@@ -37,7 +37,6 @@ async function listarVeterinarias(){
         listaVeterinarias.innerHTML = htmlVeterinarias;
         Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
         Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminar(index));
-
         return;
     }
     listaVeterinarias.innerHTML =  `<tr>
