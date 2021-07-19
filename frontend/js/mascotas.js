@@ -41,7 +41,7 @@ async function listarMascotas(){
              </td>
          </tr>`;
     } catch (error) {
-        //console.log({error});
+        console.log({error});
         $(".alert").show;
     }
 };
