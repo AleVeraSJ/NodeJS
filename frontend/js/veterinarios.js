@@ -1,5 +1,3 @@
-
-
 const listaVeterinarias = document.getElementById("lista-Veterinarias");
 const tipo = document.getElementById("pais");
 const nombre = document.getElementById("nombre");

@@ -13,3 +13,16 @@
     width: 116%;
     position: center;
 }
+
+.action-menu-content{
+    display: flex;
+    justify-content:space-between ;
+}
+
+.action-menu-content > button.btn.btn-primary{
+    height: 20px;
+}
+
+.alert{
+    display: none;
+}
