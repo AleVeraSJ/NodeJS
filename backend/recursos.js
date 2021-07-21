@@ -7,17 +7,17 @@ module.exports = {
     ],
 
     veterinarias: [
-        {nombre: "Ale", apellido: "Vera", documento: "40592085" },
-        {nombre: "Jesus", apellido: "Barbero", documento: "34355665" },
-        {nombre: "Rama", apellido: "Ortega", documento: "43543435" },
-        {nombre: "Mario", apellido: "Abad", documento: "45647598" },
+        {tipo:"Argentina",nombre: "Ale", apellido: "Vera", identificacion: "40592085" },
+        {tipo:"Argentina",nombre: "Jesus", apellido: "Barbero", identificacion: "34355665" },
+        {tipo:"Argentina",nombre: "Rama", apellido: "Ortega", identificacion: "43543435" },
+        {tipo:"Argentina",nombre: "Mario", apellido: "Abad", identificacion: "45647598" },
     ],
 
     duenos: [
-        {nombre: "Maria", apellido: "Vera", documento: "40555085" },
-        {nombre: "Octavio", apellido: "Barbero", documento: "34445665" },
-        {nombre: "Matias", apellido: "Ortega", documento: "4354354335" },
-        {nombre: "Mariana", apellido: "Abad", documento: "456473454348" }
+        {tipo: "Argentina", nombre: "Maria", apellido: "Vera", identificacion: "40555085" },
+        {tipo: "Argentina", nombre: "Octavio", apellido: "Barbero", identificacion: "34445665" },
+        {tipo: "Argentina", nombre: "Matias", apellido: "Ortega", identificacion: "4354354335" },
+        {tipo: "Argentina", nombre: "Mariana", apellido: "Abad", identificacion: "456473454348" }
     ],
     consultas: [
         {mascota: 0, 

@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link href="./css/style.css" rel="stylesheet" crossorigin="anonymous">
     <title>Veterinaria Vera</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -24,16 +25,16 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="./index.html">Mascotas</a>
+                    <a class="nav-link " aria-current="page" href="index.html">Mascotas</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="./veterinarios.html">Veterinarios</a>
+                    <a class="nav-link " href="veterinarios.html">Veterinari@s</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="./consultas.html">Consultas</a>
+                    <a class="nav-link" href="consultas.html">Consultas</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " href="./dueños.html" >Dueños</a>
+                    <a class="nav-link active " href="dueños.html" >Dueños</a>
                   </li>
                 </ul>
               </div>
@@ -46,14 +47,23 @@
     <!--Fin de Nav-->
     <div class="action-menu" >
       <h1>Dueños</h1>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Nuevo
-      </button>
+      <div class="actions-menu-content">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Nuevo Dueño
+        </button>
+        <div class="alert alert-danger alert-dismissible " role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+      </div>
+    </div>
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Nuevo</h5>
+              <h5 class="modal-title" id="staticBackdropLabel">Nuevo Dueño</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -103,7 +113,7 @@
               <th scope="col">Acciones</th>
             </tr>
         </thead>
-        <tbody id="lista-mascotas">
+        <tbody id="lista-duenos">
             
         </tbody>
     </table>

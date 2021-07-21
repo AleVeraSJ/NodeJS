@@ -1,5 +1,5 @@
 const listaVeterinarias = document.getElementById("lista-Veterinarias");
-const tipo = document.getElementById("pais");
+//const tipo = document.getElementById("pais");//
 const nombre = document.getElementById("nombre");
 const apellido = document.getElementById("apellido");
 const identificacion = document.getElementById("identificacion");
@@ -7,7 +7,8 @@ const form = document.getElementById("form");
 const btnGuardar = document.getElementById("btn-guardar");
 const indice = document.getElementById("indice");
 const url = "http://localhost:5000/veterinarias";
-let Veterinarias = [];
+
+let veterinarias = [];
 
 async function listarVeterinarias(){
 
@@ -19,9 +20,9 @@ async function listarVeterinarias(){
         }
         if (veterinarias.length>0){
 
-        const htmlVeterinarias = Veterinarias.map((Veterinaria, index)=>
+        const htmlVeterinarias = veterinarias
+        .map((Veterinaria, index)=>
             `<th scope="row">${index}</th>
-            <td>${Veterinaria.tipo}</td>
             <td>${Veterinaria.nombre}</td>}
             <td>${Veterinaria.apellido}</td>
             <td>${Veterinaria.identificacion}</td>
@@ -48,36 +49,50 @@ async function listarVeterinarias(){
     }
 };
 
-function enviarDatos(evento){
+async function enviarDatos(evento){
     evento.preventDefault();
-    let datos= {
-        tipo: tipo.value,
+try {
+    const datos= {
         nombre: nombre.value,
         apellido: apellido.value,
         identificacion: identificacion.value
     };
-    let accion = btnGuardar.value;
+    const accion = btnGuardar.value;
+    let urlEnvio = url;
+    let method = "POST"
     console.log("enviar datos", accion);
-    switch(accion){
-        case "Editar":
-            Veterinarias[indice.value]=datos;
-            break;
-        default:
-            Veterinarias.push(datos);
-            break;
+
+
+    if(accion === "Editar"){
+            urlEnvio+=`/${indice.value}`;
+            method = "PUT";
     }
-    listarVeterinarias();
-    resetModal();
-}
+    const respuesta = await fetch (urlEnvio,{
+        method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify (datos),
+        mode:"cors",
+    });
+        if (respuesta.ok){
+            listarVeterinarias();
+            resetModal();
+        }
+} catch (error) {
+    console.log({error});
+        $(".alert").show();
+    };
+   
+};
 
 
 function editar(index){
     return function cuandoClickeo(){
         btnGuardar.value = "Editar"
-        let Veterinaria = Veterinarias[index];
+        let Veterinaria = veterinarias[index];
         nombre.value = Veterinaria.nombre;
         apellido.value = Veterinaria.apellido;
-        tipo.value = Veterinaria.tipo;
         indice.value = index;
         identificacion.value = Veterinaria.identificacion;
     }
@@ -86,16 +101,27 @@ function editar(index){
 function resetModal(){
     nombre.value = "";
     apellido.value = "";
-    tipo.value = "";
     indice.value = "";
     identificacion.value = "";
     btnGuardar.value="Guardar"
 }
 
 function eliminar(index){
-    return function clickEnEliminar(){
-        Veterinarias = Veterinarias.filter((Veterinaria, indiceVeterinaria) => indiceVeterinaria !== index);
-        listarVeterinarias();
+    const urlEnvio = `${url}/${index}`;
+    return async function clickEnEliminar(){
+        try {
+            const respuesta = await fetch (urlEnvio,{
+                method: "DELETE",
+            });
+                if (respuesta.ok){
+                    listarVeterinarias();
+                    resetModal();
+                }
+        
+        }catch (error) {
+            console.log({error});
+            $(".alert").show();
+        } 
     }
 }
 

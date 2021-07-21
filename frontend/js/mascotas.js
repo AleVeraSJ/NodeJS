@@ -77,7 +77,8 @@ async function enviarDatos(evento){
         }
     
     } catch (error) {
-        throw error;
+        console.log({error});
+        $(".alert").show();
     };
 
 };
@@ -115,7 +116,8 @@ function eliminar(index){
                 }
         
         }catch (error) {
-            throw error;
+            console.log({error});
+            $(".alert").show();
         } 
     }
 }
