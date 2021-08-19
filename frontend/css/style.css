@@ -26,3 +26,7 @@
 .alert{
     display: none;
 }
+
+.form-row{
+    margin: 6px;
+}

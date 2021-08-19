@@ -1,23 +1,21 @@
 const listaConsultas = document.getElementById ("lista-consultas");
-
-
-/*  {mascota: 0, 
-        veterinaria: 0,  
-        fechaCreacion: new Date (),
-        fechaEdicion: new Date (), 
-        historia: "", 
-        diagnostico: ""
-        },*/
-
-
+const mascota = document.getElementById ("tipo");
+const veterinario = document.getElementById("veterinario");
+const historia = document.getElementById("historia");
+const diagnostico = document.getElementById("diagnostico");
+const btnGuardar = document.getElementById("btn-guardar");
+const indice = document.getElementById("indice");
 
 
 let consultas = [];
-const url = "http://localhost:5000/consultas";
+let mascotas = [];
+let veterinarios = [];
+const url = "http://localhost:5000";
 
 async function listarConsultas() {
+    const entidad = "consultas";
     try {
-        const respuesta = await fetch (url);
+        const respuesta = await fetch (`${url}/${entidad}`);
         const consultasDelServer = await respuesta.json();
         if(Array.isArray(consultasDelServer)){
         consultas = consultasDelServer;
@@ -34,7 +32,7 @@ async function listarConsultas() {
                     <td>${consulta.fechaEdicion}</td>
                     <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary">Editar</button>
+                        <button type="button" class="btn btn-primary editar"data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="far fa-edit"></i></button>
                     </div>
                     </td>
                     </tr>
@@ -42,8 +40,8 @@ async function listarConsultas() {
              )
              .join("");
              listaConsultas.innerHTML = htmlConsultas;
-
-        
+             Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
+            
         }
 
 
@@ -52,28 +50,73 @@ async function listarConsultas() {
         throw error;
     }
 }
+
+async function listarMascotas() {
+    const entidad = "mascotas";
+    try {
+        const respuesta = await fetch (`${url}/${entidad}`);
+        const mascotasDelServer = await respuesta.json();
+        if(Array.isArray(mascotasDelServer)){
+        mascotas = mascotasDelServer;
+        }
+        if (respuesta.ok){
+            const htmlMascotas = mascotas.forEach(
+                (_mascota, indice) =>{
+                    const optionActual = document.createElement("option");
+                    optionActual.innerHTML = _mascota.nombre;
+                    optionActual.value = indice;
+                    mascota.appendChild(optionActual);
+                });
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+async function listarVeterinarios() {
+    const entidad = "veterinarias";
+    try {
+        const respuesta = await fetch (`${url}/${entidad}`);
+        const veterinariosDelServer = await respuesta.json();
+        if(Array.isArray(veterinariosDelServer)){
+        veterinarios = veterinariosDelServer;
+        }
+        if (respuesta.ok){
+             veterinarios.forEach(
+                (_veterinario, indice) =>{
+                    const optionActual = document.createElement("option");
+                    optionActual.innerHTML =`${_veterinario.nombre} ${_veterinario.apellido} `;
+                    optionActual.value = indice;
+                    veterinario.appendChild(optionActual);
+                });
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+
+function editar(index){
+    return function cuandoClickeo(){
+        btnGuardar.value = "editar"
+        $("#exampleModalCenter").modal("toggle");
+        const consulta = consultas[index];
+        indice.value = index;
+        mascota.value = consulta.mascota;
+        veterinario.value = consulta.veterinaria;
+        historia.value = consulta.historia;
+        diagnostico.value = consulta.diagnostico;
+    }
+}
+
+
+
+
+
 listarConsultas();
+listarMascotas();
+listarVeterinarios();
 
 
-
-
-
-
-
-
-
-
-
-`<tr>
-<th scope="row">2</th>
-<td>Jacob</td>
-<td>Thornton</td>
-<td>@fat</td>
-<td>
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-primary">Editar</button>
-    <button type="button" class="btn btn-danger">Eliminar</button>
-  </div>
-</td>
-</tr>
-<tr>`
