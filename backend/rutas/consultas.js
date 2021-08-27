@@ -8,8 +8,8 @@ module.exports = function consultasHandler ({consultas, veterinarias, mascotas})
                return callback(404 ,{mensaje: `consulta con indice ${data.indice} no encontrada`});
            }
            const consultasConRelaciones = consultas.map((consulta)=>(
-               {...consulta, mascota: mascotas[consulta.mascota],
-            veterinaria: veterinarias[consulta.veterinaria]}
+               {...consulta, mascota: {...mascotas[consulta.mascota],id: consulta.mascota } ,
+            veterinaria: {...veterinarias[consulta.veterinaria], id: consulta.veterinaria}}
            ));
            callback(200, consultasConRelaciones);
        },

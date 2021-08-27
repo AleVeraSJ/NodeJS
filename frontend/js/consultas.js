@@ -97,22 +97,68 @@ async function listarVeterinarios() {
 }
 
 
+async function enviarDatos(evento){
+    const entidad = "consultas";
+    evento.preventDefault();
+try {
+    const datos= {
+        mascota: mascota.value,
+        veterinaria: veterinario.value,
+        historia: historia.value,
+        diagnostico: diagnostico.value,
+
+    };
+    
+    const accion = btnGuardar.value;
+    let urlEnvio = `${url}/${entidad}`;
+    let method = "POST";
+    if(accion === "Editar"){
+        urlEnvio += `/${indice.value}`
+        method = "PUT";
+    }
+const respuesta = await fetch (urlEnvio,{
+    method,
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify (datos),
+});
+        if (respuesta.ok){
+            listarConsultas();
+            resetModal();
+        }
+    } catch (error) {
+    throw error;
+    };
+
+};
 
 function editar(index){
     return function cuandoClickeo(){
-        btnGuardar.value = "editar"
+        btnGuardar.value = "Editar"
         $("#exampleModalCenter").modal("toggle");
         const consulta = consultas[index];
         indice.value = index;
-        mascota.value = consulta.mascota;
-        veterinario.value = consulta.veterinaria;
+        mascota.value = consulta.mascota.id;
+        veterinario.value = consulta.veterinaria.id;
         historia.value = consulta.historia;
         diagnostico.value = consulta.diagnostico;
     }
 }
 
 
+function resetModal(){
+    indice.value = "";
+    mascota.value = "";
+    veterinario.value = "";
+    historia.value = "";
+    diagnostico.value = "";
+    btnGuardar.value="Guardar"
+}
 
+
+form.onsubmit = enviarDatos;
+btnGuardar.onclick = enviarDatos;
 
 
 listarConsultas();
